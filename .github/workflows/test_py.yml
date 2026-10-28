@@ -37,6 +37,7 @@ jobs:
         id: pytest
         shell: pwsh
         run: |
+          $env:PYTHONPATH = (Resolve-Path ..).Path
           python -m xlsx2md --help
           if ($LASTEXITCODE -ne 0) { exit 1 }
           python -m pytest -v tests

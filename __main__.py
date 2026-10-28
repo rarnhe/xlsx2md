@@ -197,7 +197,7 @@ def get_default_excel_path():
         sys.exit(1)
 
     script_path = os.path.abspath(__file__)
-    current_dir = os.path.dirname(os.path.dirname(script_path))
+    current_dir = os.path.dirname(script_path)
     target_excel_name = "xlsx2md.xlsx"
     target_excel = os.path.join(current_dir, target_excel_name)
 
