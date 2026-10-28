@@ -1,9 +1,10 @@
-"""Independent unit tests for xlsx2md."""
-from pathlib import Path
+"""Independent unit tests for the xlsx2md package."""
+import subprocess
+import sys
 
 from openpyxl import Workbook
 
-from xlsx2md import (
+from xlsx2md.__main__ import (
     format_multi_note_text,
     get_image_row_and_col,
     process_single_sheet,
@@ -60,3 +61,19 @@ def test_image_anchor_without_position():
         pass
 
     assert get_image_row_and_col(EmptyImage()) == (None, None)
+
+
+def test_module_entrypoint_help():
+    result = subprocess.run(
+        [sys.executable, "-m", "xlsx2md", "--help"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
+    assert "sheet" in result.stdout
+
+
+def test_default_workbook_path():
+    from xlsx2md.__main__ import get_default_excel_path
+    assert get_default_excel_path().endswith("xlsx2md.xlsx")

@@ -191,16 +191,14 @@ def process_single_sheet(ws, sheet_dir, sheet_title):
 
 
 def get_default_excel_path():
-    """精确获取与当前脚本同名的 .xlsx 文件路径，不存在时直接终端中断提示"""
+    """Locate the existing xlsx2md.xlsx beside the repository root."""
     if "__file__" not in globals():
         print("❌ 错误: 无法确定当前脚本文件名（缺少 __file__ 上下文）！")
         sys.exit(1)
 
     script_path = os.path.abspath(__file__)
-    current_dir = os.path.dirname(script_path)
-    script_name = os.path.splitext(os.path.basename(script_path))[0]
-
-    target_excel_name = f"{script_name}.xlsx"
+    current_dir = os.path.dirname(os.path.dirname(script_path))
+    target_excel_name = "xlsx2md.xlsx"
     target_excel = os.path.join(current_dir, target_excel_name)
 
     if not os.path.exists(target_excel):
