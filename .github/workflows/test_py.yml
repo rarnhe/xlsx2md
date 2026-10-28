@@ -15,6 +15,9 @@ permissions:
 jobs:
   run-pytest:
     runs-on: windows-latest
+    env:
+      PYTHONIOENCODING: utf-8
+      PYTHONUTF8: "1"
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
@@ -30,8 +33,7 @@ jobs:
         shell: pwsh
         run: |
           python -m pip install --upgrade pip
-          pip install pytest Pillow
-          if (Test-Path "requirements.txt") { pip install -r requirements.txt }
+          if (Test-Path "requirements.txt") { python -m pip install -r requirements.txt }
 
       - name: Run Pytest & Auto Generate Reports
         id: pytest
@@ -41,6 +43,7 @@ jobs:
           python -m xlsx2md --help
           if ($LASTEXITCODE -ne 0) { exit 1 }
           python -m pytest -v tests
+          exit $LASTEXITCODE
         continue-on-error: true
 
       - name: Commit and push test report back to repo
