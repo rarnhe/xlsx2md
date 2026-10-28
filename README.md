@@ -5,7 +5,6 @@ The repository root is the `xlsx2md` Python package. After cloning and installin
 ```bash
 git clone https://github.com/rarnhe/xlsx2md.git
 python -m pip install -r xlsx2md/requirements.txt
-python -m pip install Pillow
 python -m xlsx2md
 ```
 
